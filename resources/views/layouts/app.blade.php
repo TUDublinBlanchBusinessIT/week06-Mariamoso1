@@ -9,13 +9,6 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-static-top">
-        <ul class="nav navbar-nav">
-            <li><a href="{{ route('products.displaygrid') }}">Shop</a></li>
-            <li><a href="{{ route('scorders.index') }}">Orders</a></li>
-        </ul>
-    </nav>
-
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="row">

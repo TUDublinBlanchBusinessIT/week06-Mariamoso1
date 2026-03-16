@@ -39,17 +39,21 @@ class productController extends BaseController
     }
 
     public function displayGrid(Request $request)
-    {
-        $products = \App\Models\Product::all();
-        return view('products.displaygrid')->with('products', $products);
+{
+    $products=\App\Models\Product::all();
+    if ($request->session()->has('cart')) {
+        $cart = $request->session()->get('cart');
+        $totalQty=0;
+        foreach ($cart as $product => $qty) {
+            $totalQty = $totalQty + $qty;
+        }
+        $totalItems=$totalQty;
     }
-
-    public function index(Request $request)
-    {
-        $products = $this->productRepository->all();
-        return view('products.index')
-            ->with('products', $products);
+    else {
+        $totalItems=0;
     }
+    return view('products.displaygrid')->with('products',$products)->with('totalItems',$totalItems);
+}
 
     public function create()
     {
@@ -107,4 +111,12 @@ class productController extends BaseController
         Flash::success('Product deleted successfully.');
         return redirect(route('products.index'));
     }
+
+    public function emptycart()
+{
+    if (Session::has('cart')) {
+        Session::forget('cart');
+    }
+    return Response::json(['success'=>true],200);
+}
 }
